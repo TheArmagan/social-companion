@@ -1,0 +1,23 @@
+{
+  "name": "social-companion",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "pnpm run --recursive --if-present start",
+    "build": "pnpm run --recursive --if-present build",
+    "build:i": "pnpm run build && pnpm install",
+    "db:generate": "pnpm run --filter api db:generate"
+  },
+  "dependencies": {
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5"
+  },
+  "prisma": {
+    "schema": "database-schema"
+  }
+}
