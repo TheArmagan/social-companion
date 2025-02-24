@@ -1,14 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+import { Database } from "./Database";
 
 export class SocialCompanion {
-  db = new PrismaClient().$extends({
-    model: {
-      user: {
-        async hello() {
-          return "World";
-        }
-      }
-    }
-  });
+  db = Database.client;
   constructor() { }
 }
