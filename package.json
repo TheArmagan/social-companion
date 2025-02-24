@@ -12,12 +12,11 @@
     "db:generate": "pnpm run --filter api db:generate"
   },
   "dependencies": {
-    "typescript": "^5.7.3"
+    "ts-patch": "^3.3.0",
+    "typescript": "^5.7.3",
+    "typescript-transform-paths": "^3.5.3"
   },
   "devDependencies": {
     "@types/node": "^22.13.5"
-  },
-  "prisma": {
-    "schema": "database-schema"
   }
 }
