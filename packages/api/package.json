@@ -20,6 +20,7 @@
     "schema": "./prisma/_base.prisma"
   },
   "dependencies": {
-    "@prisma/client": "6.4.1"
+    "@prisma/client": "6.4.1",
+    "redis": "^4.7.0"
   }
 }

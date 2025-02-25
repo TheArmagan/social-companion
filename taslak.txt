@@ -1,0 +1,11 @@
+- Store VoiceState in Redis, on join leave etc.
+- View Elapsed Time in VC for all member in current channel
+- Show VC Daily History Per Channel
+
+- There will only be 2 DM MESSAGE
+  - One for last 10 notifications, user can clear them of if they want
+  - One for panel to manage xps etc.
+
+- XP Boosts from Donates
+  - For Guild Level
+  - For Global Level
