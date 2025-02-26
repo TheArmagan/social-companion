@@ -1,0 +1,16 @@
+{
+  "name": "@social-companion/redis-sync",
+  "version": "0.0.1",
+  "private": true,
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tspc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "@social-companion/redis": "workspace:*"
+  }
+}

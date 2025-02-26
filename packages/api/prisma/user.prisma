@@ -1,15 +1,43 @@
 model User {
-  id            String        @id @db.VarChar(32)
-  items         UserItem[]
-  guild_members GuildMember[]
+  id String @id @db.VarChar(32)
+
+  xp BigInt
+
+  items           UserItem[]
+  guild_members   GuildMember[]
+  notifications   UserNotification[]
+  voice_histories GuildChannelVoiceHistory[]
+  boosts          UserBoosts[]
+}
+
+model UserBoosts {
+  id      String   @id @default(uuid())
+  user    User     @relation(fields: [user_id], references: [id])
+  user_id String   @db.VarChar(32)
+  amount  Int // %22 = xp * ((100 + 22) / 100)
+  until   DateTime
+
+  @@index([user_id, until], name: "idx_boosts_user_id_until")
+  @@index([user_id], name: "idx_boosts_user_id", type: Hash)
 }
 
 model UserItem {
-  id      String @db.VarChar(64)
-  user    User   @relation(fields: [user_id], references: [id])
-  user_id String @db.VarChar(32)
-  amount  Int
+  id         String   @db.VarChar(64)
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String   @db.VarChar(32)
+  created_at DateTime @default(now())
+  amount     Int
 
   @@unique([id, user_id], name: "unq_item_id_user_id")
-  @@index([user_id], name: "idx_item_user_id")
+  @@index([user_id], name: "idx_item_user_id", type: Hash)
+  @@index([created_at], name: "idx_item_created_at")
+}
+
+model UserNotification {
+  id           String   @id @default(uuid())
+  user         User     @relation(fields: [user_id], references: [id])
+  user_id      String   @db.VarChar(32)
+  message_key  String   @db.VarChar(64)
+  message_args String[]
+  extra        Json?
 }

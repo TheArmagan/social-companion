@@ -1,6 +1,8 @@
 model Guild {
-  id            String        @id @db.VarChar(32)
-  guild_members GuildMember[]
+  id              String                     @id @db.VarChar(32)
+  guild_members   GuildMember[]
+  voice_histories GuildChannelVoiceHistory[]
+  channels        GuildChannel[]
 }
 
 model GuildMember {
@@ -10,9 +12,47 @@ model GuildMember {
   user     User   @relation(fields: [user_id], references: [id])
   user_id  String @db.VarChar(32)
 
-  xp BigInt
+  xp        BigInt
+  following Boolean @default(false)
 
   @@unique([guild_id, user_id], name: "unq_member_guild_id_user_id")
-  @@index([guild_id], name: "idx_member_guild_id")
-  @@index([user_id], name: "idx_member_user_id")
+  @@index([guild_id], name: "idx_member_guild_id", type: Hash)
+  @@index([user_id], name: "idx_member_user_id", type: Hash)
+}
+
+enum ChannelType {
+  Text
+  Voice
+}
+
+model GuildChannel {
+  id       String @id @db.VarChar(32)
+  guild    Guild  @relation(fields: [guild_id], references: [id])
+  guild_id String @db.VarChar(32)
+
+  type      ChannelType
+  histories GuildChannelVoiceHistory[]
+
+  @@unique([id, guild_id], name: "unq_channel_id_guild_id")
+}
+
+model GuildChannelVoiceHistory {
+  id         String       @id @db.VarChar(32)
+  guild      Guild        @relation(fields: [guild_id], references: [id])
+  guild_id   String       @db.VarChar(32)
+  user       User         @relation(fields: [user_id], references: [id])
+  user_id    String       @db.VarChar(32)
+  channel_id String       @db.VarChar(32)
+  channel    GuildChannel @relation(fields: [channel_id], references: [id])
+
+  day_index Int // write a util method to calculate this
+  duration  Int @default(0) // as seconds
+
+  @@unique([channel_id, user_id, day_index], name: "unq_voice_state_channel_id_user_id_day_index")
+  @@index([channel_id], name: "idx_voice_state_channel_id", type: Hash)
+  @@index([user_id], name: "idx_voice_state_user_id", type: Hash)
+  @@index([guild_id], name: "idx_voice_state_guild_id", type: Hash)
+  @@index([day_index], name: "idx_voice_state_day_index")
+  @@index([duration], name: "idx_voice_state_duration")
+  @@index([channel_id, user_id, day_index], name: "idx_voice_state_channel_id_day_index")
 }
