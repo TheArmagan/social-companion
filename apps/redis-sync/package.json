@@ -11,6 +11,6 @@
   "author": "",
   "license": "GPL-3.0-only",
   "dependencies": {
-    "@social-companion/redis": "workspace:*"
+    "@social-companion/api": "workspace:*"
   }
 }

@@ -4,3 +4,5 @@ packages:
 catalogs:
   prisma:
     prisma: latest
+  redis:
+    redis: latest
